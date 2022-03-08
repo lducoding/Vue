@@ -1,95 +1,55 @@
 <template>
-  <div>
-    <div id="computer" :style="computedStyleObject"></div>
-    <div>
-    <button @click="onClickButton('바위')">바위</button>
-    <button @click="onClickButton('가위')">가위</button>
-    <button @click="onClickButton('보')">보</button>
-    </div>
-    <div>{{result}}</div>
-    <div>현재 {{score}} 점</div>
+<div>
+  <div>당첨숫자</div>
+  <div id="결과창">
+    <lotto-ball v-for="ball in winBalls" number="5"></lotto-ball>
   </div>
+  <div>보너스</div>
+    <lotto-ball v-if="bonus"></lotto-ball>
+  <button v-if="redo">한 번 더!</button>
+</div>
 </template>
 
 <script>
-const rspCords = {
-  바위: '0',
-  가위: '-142px',
-  보: '-284px',
+import LottoBall from "./LottoBall";
+
+function getWinNumbers() {
+  const candidate = Array(45).fill().map((v, i) => i + 1);
+  const shuffle = [];
+  while (candidate.length > 0) {
+    shuffle.push(candidate.splice(Math.floor(Math.random() * candidate.length), 1)[0]);
+  }
+  const bonusNumber = shuffle[shuffle.length - 1];
+  const winNumbers = shuffle.slice(0, 6).sort((p, c) => p - c);
+  return [...winNumbers, bonusNumber];
 }
 
-const scores = {
-  가위: 1,
-  바위: 0,
-  보: -1,
-};
-const computerChoice = (imgCord) => {
-  return Object.entries(rspCords).find(function (v) {
-    return v[1] === imgCord;
-  })[0];
-};
-
-
-let interval = null;
 export default {
+  components: {
+    'lotto-ball': LottoBall,
+  },
   data() {
     return {
-      imgCord: rspCords.바위,
-      result: '',
-      score: 0,
-    }
+      winNumbers: getWinNumbers(),
+      winBalls: [],
+      bonus: null,
+      redo: false,
+    };
   },
   computed: {
-    computedStyleObject() {
-      return {
-        background: `url(https://en.pimg.jp/023/182/267/1/23182267.jpg) ${this.imgCord} 0`
-      }
-    }
-  },
-  methods: {
-    changeHand() {
-      interval = setInterval(() => {
-        if(this.imgCord === rspCords.바위) {
-          this.imgCord = rspCords.가위;
-        } else if(this.imgCord === rspCords.가위){
-          this.imgCord = rspCords.보;
-        } else if(this.imgCord === rspCords.보) {
-          this.imgCord = rspCords.바위;
-        }
-      }, 100);
-    },
-    onClickButton(choice) {
-      clearInterval(interval);
-      const myScore = scores[choice];
-      const cpuScore = scores[computerChoice(this.imgCord)];
-      const diff = myScore - cpuScore;
-      if(diff === 0) {
-        this.result = '비겼습니다.';
-      } else if ([-1, 2].includes(diff)) {
-        this.result = '이겼습니다.';
-        this.score += 1;
-      } else {
-        this.result = '졌습니다.';
-        this.score -= 1;
-      }
-      setTimeout(() => {
-        this.changeHand();
-      }, 1000)
-    },
-  },
-  created() {
 
   },
-  mounted() {
-    this.changeHand();
+  methods: {
+
   },
-  updated() {
+
+  mounted() {
 
   },
   beforeDestroy() {
-    clearInterval(interval);
+
   },
-  destroyed() {
+  watch: {
 
   },
 };
