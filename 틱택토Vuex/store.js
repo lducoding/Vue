@@ -20,17 +20,19 @@ export default new Vuex.Store({
         winner: '',
     },
     getters: { // vue의 computed와 비슷
-
+        turnMessage(state) {
+            return state.turn + '님이 승리하셨습니다.';
+        }
     },
     mutations: { // state를 수정할 때 사용 (동기적으로)
         [SET_WINNER](state, winner) {
             state.winner = winner;
         },
         [CLICK_CELL](state, { row, cell }) {
-            Vue.set(state.tableData[row], [cell] ,state.turn);
+            Vue.set(state.tableData[row], cell ,state.turn);
         },
         [CHANGE_TURN](state) {
-            state.tuen = state.turn === 'O' ? 'X' : 'O';
+            state.turn = state.turn === 'O' ? 'X' : 'O';
         },
         [RESET_GAME](state) {
             state.turn = 'O';

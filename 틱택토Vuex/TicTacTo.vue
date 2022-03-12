@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import store from './store'
 import TableComponent from "./TableComponent";
 export default {
@@ -14,19 +15,17 @@ export default {
   components: {
     TableComponent
   },
-  data() {
-    return {
-        tableData: [
-          ['','',''],
-          ['','',''],
-          ['','',''],
-        ],
-        turn: 'O',
-      winner: '',
-    };
-  },
   computed: {
-
+    ...mapState(['winner','turn']),
+    // winner() {
+    //   return this.$store.state.winner;
+    // },
+    // turn() {
+    //   return this.$store.state.turn;
+    // },
+    // tableData() {
+    //   return this.$store.state.tableData;
+    // },
   },
   methods: {
     onClickTd(rowIndex, cellIndex) {

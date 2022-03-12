@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td-component v-for="(cellData, index) in rowData" :key="index" :cell-index="index"></td-component>
+    <td-component v-for="(cellData, index) in rowData" :key="index" :cell-index="index" :row-index="rowIndex"></td-component>
   </tr>
 </template>
 
