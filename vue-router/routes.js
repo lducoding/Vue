@@ -4,6 +4,7 @@ import NumberBaseball from '../숫자야구/NumberBaseball'
 import ResponseCheck from '../반응속도체크/ResponseCheck'
 import RockScissorsPaper from '../가위바위보/RockScissorsPaper'
 import LottoGenerator from '../로또/LottoGenerator'
+import GameMatcher from "./GameMatcher";
 
 Vue.use(VueRouter);
 
