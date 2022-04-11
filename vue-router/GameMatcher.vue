@@ -1,5 +1,6 @@
 <template>
   <div v-if="currentGame === 'number-baseball'">
+      {{query}} 오나
     <number-baseball></number-baseball>
   </div>
   <div v-else-if="currentGame === 'response-check'">
@@ -29,6 +30,9 @@ export default {
   computed: {
     currentGame() {
       return this.$route.params.name;
+    },
+    query() {
+      return this.$route.query.limit;
     }
   },
 }
