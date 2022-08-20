@@ -1,28 +1,34 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <app-header
+        v-bind:propsdata="str"
+        v-on:renew="renewStr"></app-header>
+    {{str}}
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AppHeader from "@/components/AppHeader";
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    AppHeader,
+    'app-header': AppHeader
+  },
+  // vue cli에서는 재사용때문에 data: 이런식으로 안하고 밑의 방식으로 한다.
+  data: function () {
+    return {
+      str: 'merlin'
+    }
+  },
+  methods: {
+    renewStr: function (val) {
+      this.str = val;
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
+
 </style>
